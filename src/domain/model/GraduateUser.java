@@ -2,18 +2,18 @@ package domain.model;
 
 import service.IReservation;
 
-public class GraduateUser implements IUserStudent{
+public class GraduateUser extends UserStudent {
 
-    Integer id;
-    String name;
+    private Integer id;
+    private String name;
     private Integer loanDays;
     private Integer bookQuantity;
 
-    public GraduateUser(Integer id, String name){
+    public GraduateUser(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.loanDays = 3;
-        this.bookQuantity = 3;
+        this.loanDays = 3;  // Definido como 3 dias de empréstimo
+        this.bookQuantity = 3;  // Definido como 3 livros permitidos
     }
 
     @Override
@@ -47,23 +47,8 @@ public class GraduateUser implements IUserStudent{
     }
 
     @Override
-    public boolean isDebtor() {
-        return false;
+    public Integer getMaxDays() {
+        return 3;
     }
 
-    @Override
-    public IExemplary isBookAvailable() {
-        return null;
-    }
-
-    @Override
-    public IReservation isReservationMade() {
-        return null;
-    }
-
-
-    @Override
-    public Integer getBookQuantity() {
-        return this.bookQuantity;
-    }
 }

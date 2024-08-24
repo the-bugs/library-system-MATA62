@@ -1,6 +1,6 @@
 package domain.model;
 
-public class ProfessorUser implements  IUser{
+public class ProfessorUser extends User {
 
    Integer id;
    String name;
@@ -43,12 +43,8 @@ public class ProfessorUser implements  IUser{
     }
 
     @Override
-    public boolean isDebtor() {
-        return false;
+    public Integer getMaxDays() {
+        return 7;
     }
 
-    @Override
-    public IExemplary isBookAvailable() {
-        return null;
-    }
 }

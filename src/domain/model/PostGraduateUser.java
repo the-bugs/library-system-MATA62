@@ -2,16 +2,14 @@ package domain.model;
 
 import service.IReservation;
 
-public class PostGraduateUser implements  IUser, IBookQuantityPerStudent {
+public class PostGraduateUser extends UserStudent {
 
-    Integer id;
-    String name;
-    Integer loanDays;
+    private Integer id;
+    private String name;
+    private Integer loanDays;
     private Integer bookQuantity;
 
-
-
-    public PostGraduateUser(Integer id, String name){
+    public PostGraduateUser(Integer id, String name) {
         this.id = id;
         this.name = name;
         this.loanDays = 5;
@@ -20,7 +18,7 @@ public class PostGraduateUser implements  IUser, IBookQuantityPerStudent {
 
     @Override
     public Integer getId() {
-        return null;
+        return this.id;
     }
 
     @Override
@@ -30,7 +28,7 @@ public class PostGraduateUser implements  IUser, IBookQuantityPerStudent {
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class PostGraduateUser implements  IUser, IBookQuantityPerStudent {
 
     @Override
     public Integer getLoanDays() {
-        return null;
+        return this.loanDays;
     }
 
     @Override
@@ -49,22 +47,8 @@ public class PostGraduateUser implements  IUser, IBookQuantityPerStudent {
     }
 
     @Override
-    public boolean isDebtor() {
-        return false;
+    public Integer getMaxDays() {
+        return 5;
     }
 
-    @Override
-    public IExemplary isBookAvailable() {
-        return null;
-    }
-
-    @Override
-    public IReservation isReservationMade() {
-        return null;
-    }
-
-    @Override
-    public Integer getBookQuantity() {
-        return this.bookQuantity;
-    }
 }
