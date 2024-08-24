@@ -1,6 +1,6 @@
 package repository;
 
-import domain.model.Book;
+import domain.model.book.Book;
 
 public interface IRepository {
 
