@@ -1,12 +1,13 @@
 package repository;
 
-import domain.interfaces.IUser;
+import domain.interfaces.IBook;
 import domain.model.book.Author;
 import domain.model.book.Book;
 import domain.model.reservation.Reservation;
 import domain.model.user.GraduateUser;
+import domain.model.user.PostGraduateUser;
 import domain.model.user.ProfessorUser;
-import domain.model.user.UndergraduateUser;
+import domain.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,8 @@ public class LibraryRepository implements IRepository {
     private static final Logger logger = Logger.getLogger(LibraryRepository.class.getName());
 
     private static LibraryRepository instance;
-    private final List<Book> books = new ArrayList<>();
-    private final List<IUser> users = new ArrayList<>();
+    private final List<IBook> books = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
     private final List<Reservation> reservations = new ArrayList<>();
 
     private LibraryRepository() {
@@ -31,26 +32,26 @@ public class LibraryRepository implements IRepository {
             instance = new LibraryRepository();
             logger.log(
                     Level.INFO,
-                    String.format("LibraryRepository instance created. Address: %s", instance)
+                    "LibraryRepository instance created. Address: " + instance
             );
         }
         return instance;
     }
 
     @Override
-    public Book findBookById(Integer id) {
+    public IBook findBookById(Integer id) {
         logger.log(
                 Level.INFO,
-                "Find Book by ID. Repository Address: {}", instance
+                "Find Book by ID. Repository Address: " + instance
         );
         return books.stream()
-                .filter(book -> book.id().equals(id))
+                .filter(book -> book.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
-    public IUser findUserById(Integer id) {
+    public User findUserById(Integer id) {
         logger.log(
                 Level.INFO,
                 "Find User by ID. Repository Address: {}", instance
@@ -71,9 +72,9 @@ public class LibraryRepository implements IRepository {
     }
 
     private void initUsers() {
-        users.add(new UndergraduateUser(123, "João da Silva"));
-        users.add(new GraduateUser(456, "Luiz Fernando Rodrigues"));
-        users.add(new UndergraduateUser(789, "Pedro Paulo"));
+        users.add(new GraduateUser(123, "João da Silva"));
+        users.add(new PostGraduateUser(456, "Luiz Fernando Rodrigues"));
+        users.add(new GraduateUser(789, "Pedro Paulo"));
         users.add(new ProfessorUser(100, "Carlos Lucena"));
     }
 
