@@ -1,23 +1,24 @@
 package domain.model.reservation;
 
-import domain.interfaces.IUser;
+import domain.interfaces.IBook;
 import domain.model.book.Book;
+import domain.model.user.User;
 
 import java.time.LocalDate;
 
 public class Reservation {
 
-    private Book book;
-    private IUser user;
-    private LocalDate reservationDate;
+    private User user;
+    private IBook book;
+    private final LocalDate reservationDate;
 
-    public Reservation(final Book book, final IUser user) {
-        this.book = book;
+    public Reservation(final User user, final IBook book) {
         this.user = user;
+        this.book = book;
         this.reservationDate = LocalDate.now();
     }
 
-    public Book getBook() {
+    public IBook getBook() {
         return book;
     }
 
@@ -25,20 +26,16 @@ public class Reservation {
         this.book = book;
     }
 
-    public IUser getUser() {
-        return user;
+    public User getUser() {
+        return this.user;
     }
 
-    public void setUser(IUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
     public LocalDate getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(LocalDate reservationDate) {
-        this.reservationDate = reservationDate;
+        return this.reservationDate;
     }
 
     @Override

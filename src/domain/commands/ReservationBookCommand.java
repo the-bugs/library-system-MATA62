@@ -14,7 +14,7 @@ public class ReservationBookCommand extends Command {
         final var book = repository.findBookById(bookId);
 
         if (book != null && user != null) {
-            final Reservation reservation = new Reservation(book, user);
+            final Reservation reservation = new Reservation(user, book);
             repository.addReservation(reservation);
             logger.info("Reservation created: " + reservation);
         } else {
