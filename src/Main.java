@@ -3,10 +3,14 @@ import service.InputHandler;
 
 public class Main {
     public static void main(String[] args) {
-        CommandInvoker commandInvoker = new CommandInvoker();
+
+        final CommandInvoker commandInvoker = new CommandInvoker();
         commandInvoker.loadCommands();
 
-        InputHandler inputHandler = new InputHandler(commandInvoker);
-        inputHandler.input("  LIV 100");
+        final InputHandler inputHandler = new InputHandler(commandInvoker);
+        inputHandler.start();
+//        inputHandler.start("liv 100");
+//        inputHandler.start("sai");
+//        inputHandler.input("res 123 100");
     }
 }
