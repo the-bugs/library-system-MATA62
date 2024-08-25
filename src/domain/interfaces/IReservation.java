@@ -1,6 +1,6 @@
-package service;
+package domain.interfaces;
 
 public interface IReservation {
 
-    
+
 }
