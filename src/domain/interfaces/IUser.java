@@ -10,7 +10,7 @@ public interface IUser {
 
     String getName();
 
-    Integer getLoanDaysAllowed();
+    Integer getLoanMaxDaysAllowed();
 
     List<Book> getRentedBooks();
 
