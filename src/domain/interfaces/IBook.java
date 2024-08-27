@@ -17,6 +17,8 @@ public interface IBook {
     Integer getEdition();
 
     Integer getYearPublication();
+  
+    List<IReservation> getReservations();
 
     void addExemplary(IExemplary exemplary);
 
