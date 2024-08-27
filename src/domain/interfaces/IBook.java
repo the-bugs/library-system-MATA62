@@ -18,4 +18,8 @@ public interface IBook {
 
     Integer getYearPublication();
 
+    void addExemplary(IExemplary exemplary);
+
+    List<IExemplary> getExemplaries();
+
 }

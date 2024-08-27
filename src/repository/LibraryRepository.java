@@ -3,6 +3,7 @@ package repository;
 import domain.interfaces.IBook;
 import domain.model.book.Author;
 import domain.model.book.Book;
+import domain.model.book.Exemplary;
 import domain.model.reservation.Reservation;
 import domain.model.user.GraduateUser;
 import domain.model.user.PostGraduateUser;
@@ -68,7 +69,7 @@ public class LibraryRepository implements IRepository {
 
     private void loadData() {
         initUsers();
-        initBooks();
+        initExemplaries();
     }
 
     private void initUsers() {
@@ -142,6 +143,19 @@ public class LibraryRepository implements IRepository {
                 List.of(new Author("Marting Fowler")),
                 3,
                 2003));
+    }
+
+    private void initExemplaries() {
+        this.initBooks();
+        for (final IBook book : this.books) {
+            book.addExemplary(new Exemplary(book));
+            logger.log(
+                    Level.INFO,
+                    "Book: " + book.getTitle() +
+                            " ID: " + book.getId() +
+                            " Exemplaries: " + book.getExemplaries().size()
+            );
+        }
     }
 
 }

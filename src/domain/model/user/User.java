@@ -20,8 +20,8 @@ public abstract class User implements ILoanChecker {
         this.name = name;
     }
 
-    public void setRentedBooks(final List<BookLoan> rentedBooks) {
-        this.rentedBooks = rentedBooks;
+    public void addBookLoan(final BookLoan bookLoan) {
+        this.rentedBooks.add(bookLoan);
     }
 
     public Integer getId() {

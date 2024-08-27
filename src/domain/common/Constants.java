@@ -23,4 +23,6 @@ public abstract class Constants {
     public static final Integer QUANTITY_BOOKS_GRADUATE_STUDENT = 3;
     public static final Integer QUANTITY_BOOKS_POSTGRADUATE_STUDENT = 4;
 
+    public static final String USER_OR_BOOK_NOT_FOUND = "User or book not found.";
+
 }

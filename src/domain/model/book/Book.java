@@ -1,6 +1,7 @@
 package domain.model.book;
 
 import domain.interfaces.IBook;
+import domain.interfaces.IExemplary;
 import domain.model.reservation.Reservation;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Book implements IBook {
     private final Integer edition;
     private final Integer yearPublication;
 
-    private List<Exemplary> exemplaries = new ArrayList<>();
+    private List<IExemplary> exemplaries = new ArrayList<>();
     private List<Reservation> reservations = new ArrayList<>();
 
     public Book(Integer id, String title, String publisher, List<Author> authors, Integer edition, Integer yearPublication) {
@@ -55,6 +56,16 @@ public class Book implements IBook {
     @Override
     public Integer getYearPublication() {
         return this.yearPublication;
+    }
+
+    @Override
+    public void addExemplary(IExemplary exemplary) {
+        this.exemplaries.add(exemplary);
+    }
+
+    @Override
+    public List<IExemplary> getExemplaries() {
+        return this.exemplaries;
     }
 
     @Override
