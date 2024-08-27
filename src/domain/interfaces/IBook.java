@@ -18,4 +18,6 @@ public interface IBook {
 
     Integer getYearPublication();
 
+    List<IReservation> getReservations();
+
 }
