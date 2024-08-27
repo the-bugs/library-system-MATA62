@@ -8,22 +8,27 @@ public class Exemplary implements IExemplary {
     private static Integer generatedId = 1;
 
     private final Integer exemplaryId = generatedId++;
-    private final IBook bookLoan;
-    private final Boolean isAvailable;
+    private final Integer bookId;
+    private Boolean isAvailable;
 
     public Exemplary(final IBook bookLoan) {
-        this.bookLoan = bookLoan;
+        this.bookId = bookLoan.getId();
         this.isAvailable = true;
     }
 
     @Override
-    public Integer getBookCode() {
-        return this.bookLoan.getId();
+    public Integer getBookId() {
+        return this.bookId;
     }
 
     @Override
-    public Integer getExemplaryCode() {
+    public Integer getExemplaryId() {
         return this.exemplaryId;
+    }
+
+    @Override
+    public void setStatus(Boolean status) {
+        this.isAvailable = status;
     }
 
     @Override
@@ -31,8 +36,4 @@ public class Exemplary implements IExemplary {
         return this.isAvailable;
     }
 
-    @Override
-    public IBook getBook() {
-        return this.bookLoan;
-    }
 }

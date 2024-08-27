@@ -2,11 +2,12 @@ package domain.interfaces;
 
 public interface IExemplary {
 
-    Integer getBookCode();
+    Integer getBookId();
 
-    Integer getExemplaryCode();
+    Integer getExemplaryId();
+
+    void setStatus(Boolean status);
 
     Boolean getStatus();
 
-    IBook getBook();
 }

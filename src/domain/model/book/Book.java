@@ -59,6 +59,14 @@ public class Book implements IBook {
     }
 
     @Override
+    public void addExemplary(IExemplary exemplary) {
+        this.exemplaries.add(exemplary);
+    }
+  
+    @Override
+    public List<IExemplary> getExemplaries() {
+        return this.exemplaries;
+      
     public List<IReservation> getReservations() {
         return this.reservations;
     }
