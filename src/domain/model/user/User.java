@@ -3,14 +3,15 @@ package domain.model.user;
 import domain.interfaces.ILoanChecker;
 import domain.model.book.BookLoan;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class User implements ILoanChecker {
+public abstract class User {
 
     private Integer id;
     private String name;
-    private List<BookLoan> rentedBooks;
+    private ILoanChecker loanChecker;
+    private List<BookLoan> rentedBooks = new ArrayList<>();
 
     public void setId(final Integer id) {
         this.id = id;
@@ -20,8 +21,8 @@ public abstract class User implements ILoanChecker {
         this.name = name;
     }
 
-    public void addBookLoan(final BookLoan bookLoan) {
-        this.rentedBooks.add(bookLoan);
+    public void setLoanChecker(final ILoanChecker loanChecker) {
+        this.loanChecker = loanChecker;
     }
 
     public Integer getId() {
@@ -32,6 +33,14 @@ public abstract class User implements ILoanChecker {
         return this.name;
     }
 
+    public ILoanChecker getLoanChecker() {
+        return this.loanChecker;
+    }
+
+    public void addBookLoan(final BookLoan bookLoan) {
+        this.rentedBooks.add(bookLoan);
+    }
+
     public List<BookLoan> getRentedBooks() {
         return this.rentedBooks;
     }
@@ -40,14 +49,5 @@ public abstract class User implements ILoanChecker {
 
     public abstract Integer getQuantityBooksAllowed();
 
-    @Override
-    public Boolean isLoanOverdue() {
-        for (final BookLoan loan : this.rentedBooks) {
-            if (loan.getReturnDate().isBefore(LocalDate.now())) {
-                loan.setIsOverdue(true);
-                return true;
-            }
-        }
-        return false;
-    }
+    public abstract Boolean isEligibleToRentBook();
 }
