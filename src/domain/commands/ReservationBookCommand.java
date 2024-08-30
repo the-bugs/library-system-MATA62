@@ -17,7 +17,7 @@ public class ReservationBookCommand extends Command {
             final Reservation reservation = new Reservation(user, book);
             repository.addReservation(reservation);
             logger.info("Reservation created: " + reservation);
-            book.getReservations().add(reservation);
+//            book.getReservations().add(reservation);
             logger.info(book.getTitle() + " was reserved by user " + user.getName());
         } else {
             logger.info("Book or User not found.");

@@ -1,6 +1,5 @@
 package domain.model.reservation;
 
-import domain.interfaces.IBook;
 import domain.interfaces.IReservation;
 import domain.model.book.Book;
 import domain.model.user.User;
@@ -10,17 +9,17 @@ import java.time.LocalDate;
 public class Reservation implements IReservation {
 
     private User user;
-    private IBook book;
+    private Book book;
     private final LocalDate reservationDate;
 
-    public Reservation(final User user, final IBook book) {
+    public Reservation(final User user, final Book book) {
         this.user = user;
         this.book = book;
         this.reservationDate = LocalDate.now();
     }
 
     @Override
-    public IBook getBook() {
+    public Book getBook() {
         return book;
     }
 

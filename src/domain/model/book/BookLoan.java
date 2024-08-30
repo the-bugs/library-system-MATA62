@@ -1,6 +1,5 @@
 package domain.model.book;
 
-import domain.interfaces.IExemplary;
 import domain.model.user.User;
 
 import java.time.LocalDate;
@@ -8,15 +7,17 @@ import java.time.LocalDate;
 public class BookLoan {
 
     private User user;
-    private IExemplary exemplary;
-    private Boolean isOverdue;
+    private BookCopy bookCopy;
     private final LocalDate loanDate;
     private final LocalDate returnDate;
 
-    public BookLoan(final User user, final IExemplary exemplary) {
+    public BookLoan(final User user, final BookCopy bookCopy) {
         this.user = user;
-        this.exemplary = exemplary;
-        this.loanDate = LocalDate.of(2021, 1, 1); // TODO: Esta data deve ser alterada após os testes de atraso.
+        this.bookCopy = bookCopy;
+
+        // TODO: Esta data deve ser alterada após os testes de atraso.
+        this.loanDate = LocalDate.of(2021, 1, 1);
+
         this.returnDate = this.loanDate.plusDays(this.user.getLoanMaxDaysAllowed());
     }
 
@@ -28,12 +29,12 @@ public class BookLoan {
         this.user = user;
     }
 
-    public IExemplary getExemplary() {
-        return exemplary;
+    public BookCopy getBookCopy() {
+        return bookCopy;
     }
 
-    public void setExemplary(IExemplary exemplary) {
-        this.exemplary = exemplary;
+    public void setBookCopy(BookCopy bookCopy) {
+        this.bookCopy = bookCopy;
     }
 
     public LocalDate getLoanDate() {
@@ -42,13 +43,5 @@ public class BookLoan {
 
     public LocalDate getReturnDate() {
         return returnDate;
-    }
-
-    public Boolean getIsOverdue() {
-        return isOverdue;
-    }
-
-    public void setIsOverdue(Boolean isOverdue) {
-        this.isOverdue = isOverdue;
     }
 }

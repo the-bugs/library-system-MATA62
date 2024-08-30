@@ -14,7 +14,12 @@ public class LoanBookCommand extends Command {
 
         final var user = repository.findUserById(userId);
 
-        // TODO: Verificar se o usuário está em débito
+        if (Boolean.TRUE.equals(user.isEligibleToRentBook())) {
+            logger.info("OK");
+        } else {
+            logger.info("User is not eligible to rent a book");
+            return;
+        }
 
         final var book = repository.findBookById(bookId);
 
@@ -22,7 +27,7 @@ public class LoanBookCommand extends Command {
             logger.info(USER_OR_BOOK_NOT_FOUND);
         } else {
             final var exemplary = book
-                    .getExemplaries()
+                    .getBookCopies()
                     .stream()
                     .filter(e -> e.getStatus()).findFirst()
                     .orElse(null);

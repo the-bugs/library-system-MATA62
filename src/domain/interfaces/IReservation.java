@@ -6,7 +6,8 @@ import domain.model.user.User;
 import java.time.LocalDate;
 
 public interface IReservation {
-    IBook getBook();
+
+    Book getBook();
 
     void setBook(Book book);
 
