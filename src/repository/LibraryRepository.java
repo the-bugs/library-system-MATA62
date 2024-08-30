@@ -1,82 +1,79 @@
 package repository;
 
-import domain.interfaces.IBook;
 import domain.model.book.Author;
 import domain.model.book.Book;
-import domain.model.book.Exemplary;
+import domain.model.book.BookCopy;
 import domain.model.reservation.Reservation;
-import domain.model.user.GraduateUser;
 import domain.model.user.PostGraduateUser;
 import domain.model.user.ProfessorUser;
+import domain.model.user.UndergraduateUser;
 import domain.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LibraryRepository implements IRepository {
+public class LibraryRepository {
 
     private static final Logger logger = Logger.getLogger(LibraryRepository.class.getName());
 
     private static LibraryRepository instance;
-    private final List<IBook> books = new ArrayList<>();
+    private final List<Book> books = new ArrayList<>();
     private final List<User> users = new ArrayList<>();
     private final List<Reservation> reservations = new ArrayList<>();
+
+    private final List<Integer> booksWithTwoCopies = List.of(100, 300, 400);
+    private final List<Integer> booksWithOnlyOneCopy = List.of(101, 200, 201);
 
     private LibraryRepository() {
         this.loadData();
     }
 
     public static LibraryRepository getInstance() {
+
         if (instance == null) {
             instance = new LibraryRepository();
-            logger.log(
-                    Level.INFO,
-                    "LibraryRepository instance created. Address: " + instance
-            );
+            logger.info("LibraryRepository instance created. Address: " + instance);
         }
+
+        logger.info("LibraryRepository address: " + instance);
         return instance;
     }
 
-    @Override
-    public IBook findBookById(Integer id) {
-        logger.log(
-                Level.INFO,
-                "Find Book by ID. Repository Address: " + instance
-        );
+    public Book findBookById(final Integer id) {
+        logger.info("Finding Book by ID. Repository Address: " + instance);
+
         return books.stream()
                 .filter(book -> book.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
 
-    @Override
-    public User findUserById(Integer id) {
-        logger.log(
-                Level.INFO,
-                "Find User by ID. Repository Address: {}", instance
-        );
+    public User findUserById(final Integer id) {
+        logger.info("Finding User by ID. Repository Address: " + instance);
+
         return this.users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
 
-    public void addReservation(Reservation reservation) {
+    public void addReservation(final Reservation reservation) {
         this.reservations.add(reservation);
     }
 
     private void loadData() {
         initUsers();
-        initExemplaries();
+        initBookCopies();
     }
 
     private void initUsers() {
-        users.add(new GraduateUser(123, "João da Silva"));
+        users.add(new UndergraduateUser(123, "João da Silva"));
         users.add(new PostGraduateUser(456, "Luiz Fernando Rodrigues"));
-        users.add(new GraduateUser(789, "Pedro Paulo"));
+        users.add(new UndergraduateUser(789, "Pedro Paulo"));
         users.add(new ProfessorUser(100, "Carlos Lucena"));
+
+        logger.info("Total of users: " + users.size());
     }
 
     private void initBooks() {
@@ -143,19 +140,35 @@ public class LibraryRepository implements IRepository {
                 List.of(new Author("Marting Fowler")),
                 3,
                 2003));
+
+        logger.info("Total of books: " + books.size());
     }
 
-    private void initExemplaries() {
+    private void initBookCopies() {
         this.initBooks();
-        for (final IBook book : this.books) {
-            book.addExemplary(new Exemplary(book));
-            logger.log(
-                    Level.INFO,
-                    "Book: " + book.getTitle() +
-                            " ID: " + book.getId() +
-                            " Exemplaries: " + book.getExemplaries().size()
-            );
+
+        for (final Book book : this.books) {
+            int bookId = book.getId();
+            int numberOfCopies = 0;
+
+            if (booksWithTwoCopies.contains(bookId)) {
+                numberOfCopies = 2;
+            } else if (booksWithOnlyOneCopy.contains(bookId)) {
+                numberOfCopies = 1;
+            }
+
+            for (int i = 0; i < numberOfCopies; i++) {
+                book.addBookCopy(new BookCopy(book));
+            }
         }
+
+        logger.info("Total of book copies: " + this.getTotalBookCopies());
+    }
+
+    private Integer getTotalBookCopies() {
+        return books.stream()
+                .mapToInt(book -> book.getBookCopies().size())
+                .sum();
     }
 
 }
