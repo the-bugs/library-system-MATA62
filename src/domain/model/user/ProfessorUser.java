@@ -27,6 +27,7 @@ public class ProfessorUser extends User {
 
     @Override
     public Map<Boolean, String> isEligibleToRentBook() {
-        return Map.of();
+        return this.getLoanChecker()
+                .isEligibleToRentBook(this);
     }
 }
