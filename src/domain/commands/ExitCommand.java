@@ -2,11 +2,13 @@ package domain.commands;
 
 import domain.common.Params;
 
+import static domain.common.Constants.EXITING;
+
 public class ExitCommand extends Command {
 
     @Override
     public void execute(Params params) {
-        System.out.println("Exiting...");
+        logger.info(EXITING);
         System.exit(0);
     }
 }

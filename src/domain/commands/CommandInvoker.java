@@ -5,7 +5,6 @@ import domain.common.Params;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static domain.common.Constants.*;
@@ -31,10 +30,7 @@ public class CommandInvoker {
         if (command != null) {
             command.execute(params);
         } else {
-            logger.log(
-                    Level.INFO,
-                    "Command not found."
-            );
+            logger.info(COMMAND_NOT_FOUND);
         }
     }
 }
