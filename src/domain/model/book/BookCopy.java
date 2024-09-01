@@ -4,7 +4,7 @@ public class BookCopy {
 
     private static Integer generatedId = 1;
 
-    private final Integer exemplaryId = generatedId++;
+    private final Integer bookCopyId = generatedId++;
     private final Integer bookId;
     private Boolean isAvailable;
 
@@ -17,8 +17,8 @@ public class BookCopy {
         return this.bookId;
     }
 
-    public Integer getExemplaryId() {
-        return this.exemplaryId;
+    public Integer getBookCopyId() {
+        return this.bookCopyId;
     }
 
     public void setStatus(Boolean status) {
