@@ -2,8 +2,10 @@ package domain.interfaces;
 
 import domain.model.user.User;
 
+import java.util.Map;
+
 public interface ILoanChecker {
 
-    Boolean isEligibleToRentBook(final User user);
+    Map<Boolean, String> isEligibleToRentBook(final User user);
 
 }

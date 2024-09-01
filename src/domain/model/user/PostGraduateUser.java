@@ -2,6 +2,8 @@ package domain.model.user;
 
 import service.StudentLoanChecker;
 
+import java.util.Map;
+
 import static domain.common.Constants.POSTGRADUATE_STUDENT_LOAN_DAYS;
 import static domain.common.Constants.QUANTITY_BOOKS_POSTGRADUATE_STUDENT;
 
@@ -24,8 +26,8 @@ public class PostGraduateUser extends User {
     }
 
     @Override
-    public Boolean isEligibleToRentBook() {
-        return null;
+    public Map<Boolean, String> isEligibleToRentBook() {
+        return Map.of();
     }
 
 
