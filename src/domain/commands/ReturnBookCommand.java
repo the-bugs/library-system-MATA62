@@ -12,16 +12,18 @@ public class ReturnBookCommand extends Command {
         final var user = repository.findUserById(userId);
         final var book = repository.findBookById(bookId);
 
-        if (book != null && user != null) {
-            user.getRentedBooks().stream()
-                    .filter(bookLoan -> bookLoan.getBookCopy().getBookId().equals(bookId))
-                    .findFirst()
-                    .ifPresent(bookLoan -> {
-                        user.getRentedBooks().remove(bookLoan);
-                        logger.info("Book returned by " + user.getName());
-                    });
-        } else {
+        if(user == null || book == null) {
             logger.info("User or book not found");
+            return;
         }
+
+        user.getRentedBooks().stream()
+            .filter(bookLoan -> bookLoan.getBookCopy().getBookId().equals(bookId))
+            .findFirst()
+            .ifPresent(bookLoan -> {
+                user.getRentedBooks().remove(bookLoan);
+                logger.info("Book returned by " + user.getName());
+            });
+
     }
 }
