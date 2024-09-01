@@ -1,6 +1,6 @@
 package domain.model.book;
 
-import domain.interfaces.IReservation;
+import domain.model.reservation.Reservation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,9 @@ public class Book {
     private final List<Author> authors;
     private final Integer edition;
     private final Integer yearPublication;
-    private final List<BookCopy> bookCopies = new ArrayList<>();
-    private List<IReservation> reservations = new ArrayList<>();
+
+    private List<BookCopy> bookCopies;
+    private List<Reservation> reservations;
 
     public Book(
             final Integer id,
@@ -30,6 +31,8 @@ public class Book {
         this.authors = authors;
         this.edition = edition;
         this.yearPublication = yearPublication;
+        this.bookCopies = new ArrayList<>();
+        this.reservations = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -62,5 +65,12 @@ public class Book {
 
     public List<BookCopy> getBookCopies() {
         return this.bookCopies;
+    }
+
+    public BookCopy getAvailableBookCopy() {
+        return this.bookCopies.stream()
+                .filter(BookCopy::getIsAvailable)
+                .findFirst()
+                .orElse(null);
     }
 }

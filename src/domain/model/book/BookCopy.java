@@ -8,8 +8,8 @@ public class BookCopy {
     private final Integer bookId;
     private Boolean isAvailable;
 
-    public BookCopy(final Book bookLoan) {
-        this.bookId = bookLoan.getId();
+    public BookCopy(final Book book) {
+        this.bookId = book.getId();
         this.isAvailable = true;
     }
 
@@ -21,7 +21,11 @@ public class BookCopy {
         return this.bookCopyId;
     }
 
-    public void setStatus(Boolean status) {
+    public Boolean getIsAvailable() {
+        return this.isAvailable;
+    }
+
+    public void setIsAvailable(Boolean status) {
         this.isAvailable = status;
     }
 

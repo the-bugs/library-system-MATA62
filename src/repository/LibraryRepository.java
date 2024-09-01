@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static domain.common.Constants.REPOSITORY_ADDRESS;
+import static domain.common.Constants.TOTAL_OF;
+
 public class LibraryRepository {
 
     private static final Logger logger = Logger.getLogger(LibraryRepository.class.getName());
@@ -22,8 +25,8 @@ public class LibraryRepository {
     private final List<User> users = new ArrayList<>();
     private final List<Reservation> reservations = new ArrayList<>();
 
-    private final List<Integer> booksWithTwoCopies = List.of(100, 300, 400);
-    private final List<Integer> booksWithOnlyOneCopy = List.of(101, 200, 201);
+    private final List<Integer> booksIdWithTwoCopies = List.of(100, 300, 400);
+    private final List<Integer> booksIdWithOnlyOneCopy = List.of(101, 200, 201);
 
     private LibraryRepository() {
         this.loadData();
@@ -32,17 +35,15 @@ public class LibraryRepository {
     public static LibraryRepository getInstance() {
 
         if (instance == null) {
+            logger.info("Creating new instance of LibraryRepository");
             instance = new LibraryRepository();
-            logger.info("LibraryRepository instance created. Address: " + instance);
         }
 
-        logger.info("LibraryRepository address: " + instance);
+        logger.info(REPOSITORY_ADDRESS.formatted(instance));
         return instance;
     }
 
     public Book findBookById(final Integer id) {
-        logger.info("Finding Book by ID. Repository Address: " + instance);
-
         return books.stream()
                 .filter(book -> book.getId().equals(id))
                 .findFirst()
@@ -50,15 +51,13 @@ public class LibraryRepository {
     }
 
     public User findUserById(final Integer id) {
-        logger.info("Finding User by ID. Repository Address: " + instance);
-
         return this.users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
 
-    public void addReservation(final Reservation reservation) {
+    public void setReservation(final Reservation reservation) {
         this.reservations.add(reservation);
     }
 
@@ -73,7 +72,7 @@ public class LibraryRepository {
         users.add(new UndergraduateUser(789, "Pedro Paulo"));
         users.add(new ProfessorUser(100, "Carlos Lucena"));
 
-        logger.info("Total of users: " + users.size());
+        logger.info(TOTAL_OF.formatted("users", books.size()));
     }
 
     private void initBooks() {
@@ -141,7 +140,7 @@ public class LibraryRepository {
                 3,
                 2003));
 
-        logger.info("Total of books: " + books.size());
+        logger.info(TOTAL_OF.formatted("books", books.size()));
     }
 
     private void initBookCopies() {
@@ -151,9 +150,9 @@ public class LibraryRepository {
             int bookId = book.getId();
             int numberOfCopies = 0;
 
-            if (booksWithTwoCopies.contains(bookId)) {
+            if (booksIdWithTwoCopies.contains(bookId)) {
                 numberOfCopies = 2;
-            } else if (booksWithOnlyOneCopy.contains(bookId)) {
+            } else if (booksIdWithOnlyOneCopy.contains(bookId)) {
                 numberOfCopies = 1;
             }
 
@@ -162,7 +161,7 @@ public class LibraryRepository {
             }
         }
 
-        logger.info("Total of book copies: " + this.getTotalBookCopies());
+        logger.info(TOTAL_OF.formatted("book copies", this.getTotalBookCopies()));
     }
 
     private Integer getTotalBookCopies() {

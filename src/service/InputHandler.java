@@ -20,6 +20,7 @@ public class InputHandler {
     }
 
     public void start() {
+        // TODO: Melhorar loop.
         while (true) {
             MessageHandler.enterCommandMessage();
             try {

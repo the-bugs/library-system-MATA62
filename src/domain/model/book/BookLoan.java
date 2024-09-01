@@ -17,7 +17,6 @@ public class BookLoan {
 
         // TODO: Esta data deve ser alterada após os testes de atraso.
         this.loanDate = LocalDate.of(2021, 1, 1);
-
         this.returnDate = this.loanDate.plusDays(this.user.getLoanMaxDaysAllowed());
     }
 

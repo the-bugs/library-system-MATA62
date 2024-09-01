@@ -3,45 +3,32 @@ package domain.commands;
 import domain.common.Params;
 import domain.model.book.BookLoan;
 
-import static domain.common.Constants.USER_OR_BOOK_NOT_FOUND;
+import static domain.common.Constants.*;
 
 public class LoanBookCommand extends Command {
 
     @Override
     public void execute(Params params) {
-        final Integer userId = Integer.parseInt(params.getFirstKey());
-        final Integer bookId = Integer.parseInt(params.getSecondKey());
+        final var userId = Integer.parseInt(params.getFirstKey());
+        final var bookId = Integer.parseInt(params.getSecondKey());
 
         final var user = repository.findUserById(userId);
+        final var book = repository.findBookById(bookId);
 
-        if (Boolean.TRUE.equals(user.isEligibleToRentBook())) {
-            logger.info("OK");
-        } else {
-            logger.info("User is not eligible to rent a book");
+        if (user == null || book == null) {
+            logger.info(USER_OR_BOOK_NOT_FOUND);
             return;
         }
 
-        final var book = repository.findBookById(bookId);
+        final var result = user.isEligibleToRentBook();
 
-        if (book == null || user == null) {
-            logger.info(USER_OR_BOOK_NOT_FOUND);
+        if (result.containsKey(false)) {
+            final var reason = result.get(false);
+            logger.info(USER_IS_NOT_ELIGIBLE_TO_RENT_BOOK.formatted(user.getName(), reason));
         } else {
-            final var exemplary = book
-                    .getBookCopies()
-                    .stream()
-                    .filter(e -> e.getStatus()).findFirst()
-                    .orElse(null);
-
-            if (exemplary == null) {
-                logger.info("There are no available exemplaries for this book");
-                return;
-            }
-
-            final var bookLoan = new BookLoan(user, exemplary);
-            exemplary.setStatus(false);
-
-            user.addBookLoan(bookLoan);
-            logger.info(String.format("The book %s was rented by %s", book.getTitle(), user.getName()));
+            user.setRentedBook(new BookLoan(user, book.getAvailableBookCopy()));
+            logger.info(BOOK_WAS_RENTED_BY.formatted(book.getTitle(), user.getName()));
         }
     }
+
 }

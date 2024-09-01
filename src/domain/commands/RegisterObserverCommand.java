@@ -6,6 +6,6 @@ public class RegisterObserverCommand extends Command {
 
     @Override
     public void execute(Params params) {
-
+        // TODO: Implementar.
     }
 }
