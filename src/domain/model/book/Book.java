@@ -116,13 +116,8 @@ public class Book {
         }
     }
 
-    public void registerLoan(int bookId) {
-        for (final BookCopy bookCopy : bookCopies) {
-            if (bookCopy.getBookId().equals(bookId)) {
-                bookCopy.setIsAvailable(false);
-                logger.info("Book copy of book with ID %d is now unavailable.".formatted(bookCopy.getBookId()));
-                break;
-            }
-        }
+    public void registerLoan(final BookCopy bookCopy) {
+        bookCopy.setIsAvailable(false);
+        logger.info("Book copy of book with ID %d is now unavailable.".formatted(bookCopy.getBookId()));
     }
 }

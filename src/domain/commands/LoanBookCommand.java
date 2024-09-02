@@ -33,7 +33,7 @@ public class LoanBookCommand extends Command {
             } else {
                 user.setRentedBook(new BookLoan(user, bookCopy));
                 logger.info(BOOK_WAS_RENTED_BY.formatted(book.getTitle(), user.getName()));
-                book.registerLoan(bookId);
+                book.registerLoan(bookCopy);
             }
         }
     }
