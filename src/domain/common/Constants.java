@@ -40,4 +40,5 @@ public abstract class Constants {
     public static final String BOOK_NOT_FOUND = "Book not found.";
     public static final String BOOK_WAS_RENTED_BY = "%s was rented by user %s.";
     public static final String BOOK_WAS_RESERVED_BY = "%s was reserved by user %s.";
+    public static final String NO_AVAILABLE_COPIES_OF_BOOK = "No available copies of book %s.";
 }
