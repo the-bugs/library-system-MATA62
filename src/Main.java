@@ -8,7 +8,9 @@ public class Main {
         commandInvoker.loadCommands();
 
         final InputHandler inputHandler = new InputHandler(commandInvoker);
-        inputHandler.input("liv 100");
+        inputHandler.start();
+//        inputHandler.start("liv 100");
+//        inputHandler.start("sai");
 //        inputHandler.input("res 123 100");
     }
 }

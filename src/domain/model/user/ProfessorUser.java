@@ -1,47 +1,53 @@
 package domain.model.user;
 
-import domain.interfaces.IUndergraduateUser;
-import domain.model.book.Book;
+import domain.interfaces.IObserver;
+import service.ProfessorLoanChecker;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
-import static domain.common.Constants.QUANTITY_BOOKS_UNDERGRADUATE_STUDENT;
-import static domain.common.Constants.UNDERGRADUATE_STUDENT_LOAN_DAYS;
+import static domain.common.Constants.PROFESSOR_LOAN_DAYS;
+import static domain.common.Constants.QUANTITY_BOOKS_PROFESSOR;
 
-public class ProfessorUser implements IUndergraduateUser {
+public class ProfessorUser extends User implements IObserver {
 
-    private final Integer id;
-    private final String name;
-    private final List<Book> rentedBooks = new ArrayList<>();
+    private Integer notifications = 0;
 
-    public ProfessorUser(final Integer id, final String name) {
-        this.id = id;
-        this.name = name;
+    public ProfessorUser(Integer id, String name) {
+        this.setId(id);
+        this.setName(name);
+        this.setLoanChecker(new ProfessorLoanChecker());
     }
 
     @Override
-    public Integer getId() {
-        return this.id;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public Integer getLoanDaysAllowed() {
-        return UNDERGRADUATE_STUDENT_LOAN_DAYS;
-    }
-
-    @Override
-    public List<Book> getRentedBooks() {
-        return this.rentedBooks;
+    public Integer getLoanMaxDaysAllowed() {
+        return PROFESSOR_LOAN_DAYS;
     }
 
     @Override
     public Integer getQuantityBooksAllowed() {
-        return QUANTITY_BOOKS_UNDERGRADUATE_STUDENT;
+        return QUANTITY_BOOKS_PROFESSOR;
     }
+
+    @Override
+    public Map<Boolean, String> isEligibleToRentBook() {
+        return this.getLoanChecker()
+                .isEligibleToRentBook(this);
+    }
+
+    @Override
+    public void update() {
+        notifications++;
+        System.out.println("Notification count for " + this.getName() + ": " + notifications);
+    }
+
+    @Override
+    public Integer getNotifications() {
+        return notifications;
+    }
+
+    @Override
+    public Boolean canBeObserver() {
+        return true;
+    }
+
 }

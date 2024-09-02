@@ -4,12 +4,12 @@ import service.StudentLoanChecker;
 
 import java.util.Map;
 
-import static domain.common.Constants.GRADUATE_STUDENT_LOAN_DAYS;
-import static domain.common.Constants.QUANTITY_BOOKS_GRADUATE_STUDENT;
+import static domain.common.Constants.POSTGRADUATE_STUDENT_LOAN_DAYS;
+import static domain.common.Constants.QUANTITY_BOOKS_POSTGRADUATE_STUDENT;
 
-public class UndergraduateUser extends User {
+public class PostGraduateUser extends User {
 
-    public UndergraduateUser(final Integer id, final String name) {
+    public PostGraduateUser(final Integer id, final String name) {
         this.setId(id);
         this.setName(name);
         this.setLoanChecker(new StudentLoanChecker());
@@ -17,12 +17,12 @@ public class UndergraduateUser extends User {
 
     @Override
     public Integer getLoanMaxDaysAllowed() {
-        return GRADUATE_STUDENT_LOAN_DAYS;
+        return POSTGRADUATE_STUDENT_LOAN_DAYS;
     }
 
     @Override
     public Integer getQuantityBooksAllowed() {
-        return QUANTITY_BOOKS_GRADUATE_STUDENT;
+        return QUANTITY_BOOKS_POSTGRADUATE_STUDENT;
     }
 
     @Override
@@ -30,5 +30,6 @@ public class UndergraduateUser extends User {
         return this.getLoanChecker()
                 .isEligibleToRentBook(this);
     }
+
 
 }
