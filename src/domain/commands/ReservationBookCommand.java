@@ -20,6 +20,8 @@ public class ReservationBookCommand extends Command {
             final var reservation = new Reservation(user, book);
 
             user.setReservation(reservation);
+            book.addReservation(reservation);
+
             repository.setReservation(reservation); // "A reserva também tem que ser registrada no sistema"
 
             logger.info(BOOK_WAS_RESERVED_BY.formatted(book.getTitle(), user.getName()));

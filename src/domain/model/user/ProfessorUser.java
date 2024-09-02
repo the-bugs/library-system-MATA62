@@ -1,5 +1,6 @@
 package domain.model.user;
 
+import domain.interfaces.IObserver;
 import service.ProfessorLoanChecker;
 
 import java.util.Map;
@@ -7,7 +8,9 @@ import java.util.Map;
 import static domain.common.Constants.PROFESSOR_LOAN_DAYS;
 import static domain.common.Constants.QUANTITY_BOOKS_PROFESSOR;
 
-public class ProfessorUser extends User {
+public class ProfessorUser extends User implements IObserver {
+
+    private Integer notifications = 0;
 
     public ProfessorUser(Integer id, String name) {
         this.setId(id);
@@ -30,4 +33,21 @@ public class ProfessorUser extends User {
         return this.getLoanChecker()
                 .isEligibleToRentBook(this);
     }
+
+    @Override
+    public void update() {
+        notifications++;
+        System.out.println("Notification count for " + this.getName() + ": " + notifications);
+    }
+
+    @Override
+    public Integer getNotifications() {
+        return notifications;
+    }
+
+    @Override
+    public boolean canBeObserver(){
+        return true;
+    }
+
 }

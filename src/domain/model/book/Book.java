@@ -1,11 +1,17 @@
 package domain.model.book;
 
+import domain.interfaces.IObserver;
 import domain.model.reservation.Reservation;
+import domain.model.user.ProfessorUser;
+import domain.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 public class Book {
+    private static final Logger logger = Logger.getLogger(Book.class.getName());
 
     private final Integer id;
     private final String title;
@@ -16,6 +22,8 @@ public class Book {
 
     private List<BookCopy> bookCopies;
     private List<Reservation> reservations;
+
+    private List<IObserver> observers;
 
     public Book(
             final Integer id,
@@ -33,6 +41,7 @@ public class Book {
         this.yearPublication = yearPublication;
         this.bookCopies = new ArrayList<>();
         this.reservations = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -72,5 +81,29 @@ public class Book {
                 .filter(BookCopy::getIsAvailable)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void attachObserver(IObserver observer){
+        observers.add(observer);
+    }
+
+    public void notifyObservers(){
+        for(IObserver observer : observers){
+            observer.update();
+        }
+    }
+
+    public void addReservation(Reservation reservation) {
+        this.reservations.add(reservation);
+        logger.info("Added reservation. Current reservation count: " + this.reservations.size());
+        if (this.reservations.size() >= 2){
+            notifyObservers();
+        }
+    }
+
+    public void printObservers() {
+        for (IObserver observer : observers) {
+            System.out.println("Observer: " + observer);
+        }
     }
 }

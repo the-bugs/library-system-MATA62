@@ -83,4 +83,11 @@ public abstract class User {
 
     public abstract Map<Boolean, String> isEligibleToRentBook();
 
+    public boolean canBeObserver() {
+        return false;
+    }
+
+    public Integer getNotifications() {
+        return 0;
+    }
 }
