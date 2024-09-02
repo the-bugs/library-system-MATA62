@@ -26,8 +26,15 @@ public class LoanBookCommand extends Command {
             final var reason = result.get(false);
             logger.info(USER_IS_NOT_ELIGIBLE_TO_RENT_BOOK.formatted(user.getName(), reason));
         } else {
-            user.setRentedBook(new BookLoan(user, book.getAvailableBookCopy()));
-            logger.info(BOOK_WAS_RENTED_BY.formatted(book.getTitle(), user.getName()));
+
+            final var bookCopy = book.getAvailableBookCopy();
+            if (bookCopy == null) {
+                logger.info(NO_AVAILABLE_COPIES_OF_BOOK.formatted(book.getTitle()));
+            } else {
+                user.setRentedBook(new BookLoan(user, bookCopy));
+                logger.info(BOOK_WAS_RENTED_BY.formatted(book.getTitle(), user.getName()));
+                book.registerLoan(bookId);
+            }
         }
     }
 

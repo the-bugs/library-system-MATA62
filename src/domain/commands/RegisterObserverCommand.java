@@ -14,19 +14,15 @@ public class RegisterObserverCommand extends Command {
         final var user = repository.findUserById(userId);
         final var book = repository.findBookById(bookId);
 
-        if(user == null || book == null) {
-            logger.info("User or book not found");
-            return;
-        }
-        if (!user.canBeObserver()) {
-            logger.info("User is not eligible to be an observer.");
-            return;
-        }
-
-        if(user.canBeObserver()){
-            book.attachObserver((IObserver) user);
-            logger.info("User " + user.getName() +
-                    " is now observing book " + book.getTitle());
+        if (book != null && user != null) {
+            if (Boolean.FALSE.equals(user.canBeObserver())) {
+                logger.info("User %s is not eligible to be an observer.".formatted(user.getName()));
+            } else {
+                book.attachObserver((IObserver) user);
+                logger.info("User %s is now observing book %s.".formatted(user.getName(), book.getTitle()));
+            }
+        } else {
+            logger.info("User or book not found.");
         }
     }
 }

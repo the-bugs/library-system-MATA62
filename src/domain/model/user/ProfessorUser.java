@@ -46,7 +46,7 @@ public class ProfessorUser extends User implements IObserver {
     }
 
     @Override
-    public boolean canBeObserver(){
+    public Boolean canBeObserver() {
         return true;
     }
 

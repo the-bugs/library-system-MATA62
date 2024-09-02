@@ -2,8 +2,6 @@ package domain.model.book;
 
 import domain.interfaces.IObserver;
 import domain.model.reservation.Reservation;
-import domain.model.user.ProfessorUser;
-import domain.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,6 @@ public class Book {
 
     private List<BookCopy> bookCopies;
     private List<Reservation> reservations;
-
     private List<IObserver> observers;
 
     public Book(
@@ -77,26 +74,28 @@ public class Book {
     }
 
     public BookCopy getAvailableBookCopy() {
-        return this.bookCopies.stream()
-                .filter(BookCopy::getIsAvailable)
-                .findFirst()
-                .orElse(null);
+        for (final BookCopy bookCopy : bookCopies) {
+            if (bookCopy.getIsAvailable()) {
+                return bookCopy;
+            }
+        }
+        return null;
     }
 
-    public void attachObserver(IObserver observer){
+    public void attachObserver(IObserver observer) {
         observers.add(observer);
     }
 
-    public void notifyObservers(){
-        for(IObserver observer : observers){
+    public void notifyObservers() {
+        for (IObserver observer : observers) {
             observer.update();
         }
     }
 
-    public void addReservation(Reservation reservation) {
+    public void setReservation(Reservation reservation) {
         this.reservations.add(reservation);
         logger.info("Added reservation. Current reservation count: " + this.reservations.size());
-        if (this.reservations.size() >= 2){
+        if (this.reservations.size() >= 2) {
             notifyObservers();
         }
     }
@@ -104,6 +103,26 @@ public class Book {
     public void printObservers() {
         for (IObserver observer : observers) {
             System.out.println("Observer: " + observer);
+        }
+    }
+
+    public void registerReturn(final Integer bookId) {
+        for (final BookCopy bookCopy : bookCopies) {
+            if (bookCopy.getBookId().equals(bookId)) {
+                bookCopy.setIsAvailable(true);
+                logger.info("Book copy of book with ID %d is now available.".formatted(bookCopy.getBookId()));
+                break;
+            }
+        }
+    }
+
+    public void registerLoan(int bookId) {
+        for (final BookCopy bookCopy : bookCopies) {
+            if (bookCopy.getBookId().equals(bookId)) {
+                bookCopy.setIsAvailable(false);
+                logger.info("Book copy of book with ID %d is now unavailable.".formatted(bookCopy.getBookId()));
+                break;
+            }
         }
     }
 }

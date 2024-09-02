@@ -72,7 +72,7 @@ public class LibraryRepository {
         users.add(new UndergraduateUser(789, "Pedro Paulo"));
         users.add(new ProfessorUser(100, "Carlos Lucena"));
 
-        logger.info(TOTAL_OF.formatted("users", books.size()));
+        logger.info(TOTAL_OF.formatted("users", users.size()));
     }
 
     private void initBooks() {

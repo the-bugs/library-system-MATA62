@@ -1,6 +1,7 @@
 package domain.model.user;
 
 import domain.interfaces.ILoanChecker;
+import domain.model.book.Book;
 import domain.model.book.BookLoan;
 import domain.model.reservation.Reservation;
 
@@ -53,6 +54,15 @@ public abstract class User {
         this.rentedBooks.add(rentedBook);
     }
 
+    public void returnBook(final Book book) {
+        for (final BookLoan rentedBook : this.rentedBooks) {
+            if (rentedBook.getBookCopy().getBookId().equals(book.getId())) {
+                this.rentedBooks.remove(rentedBook);
+                break;
+            }
+        }
+    }
+
     public Integer getId() {
         return this.id;
     }
@@ -77,17 +87,18 @@ public abstract class User {
         return this.rentedBooks.size();
     }
 
-    public abstract Integer getLoanMaxDaysAllowed();
-
-    public abstract Integer getQuantityBooksAllowed();
-
-    public abstract Map<Boolean, String> isEligibleToRentBook();
-
-    public boolean canBeObserver() {
+    public Boolean canBeObserver() {
         return false;
     }
 
     public Integer getNotifications() {
         return 0;
     }
+
+    public abstract Integer getLoanMaxDaysAllowed();
+
+    public abstract Integer getQuantityBooksAllowed();
+
+    public abstract Map<Boolean, String> isEligibleToRentBook();
+
 }

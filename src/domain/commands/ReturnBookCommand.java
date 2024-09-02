@@ -2,6 +2,8 @@ package domain.commands;
 
 import domain.common.Params;
 
+import static domain.common.Constants.USER_OR_BOOK_NOT_FOUND;
+
 public class ReturnBookCommand extends Command {
 
     @Override
@@ -12,18 +14,15 @@ public class ReturnBookCommand extends Command {
         final var user = repository.findUserById(userId);
         final var book = repository.findBookById(bookId);
 
-        if(user == null || book == null) {
-            logger.info("User or book not found");
+        if (user == null || book == null) {
+            logger.info(USER_OR_BOOK_NOT_FOUND);
             return;
         }
 
-        user.getRentedBooks().stream()
-            .filter(bookLoan -> bookLoan.getBookCopy().getBookId().equals(bookId))
-            .findFirst()
-            .ifPresent(bookLoan -> {
-                user.getRentedBooks().remove(bookLoan);
-                logger.info("Book returned by " + user.getName());
-            });
+        user.returnBook(book);
+        logger.info("Book %s was returned by user %s.".formatted(book.getTitle(), user.getName()));
 
+        book.registerReturn(bookId);
+        logger.info("Book %s was registered as returned.".formatted(book.getTitle()));
     }
 }

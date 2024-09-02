@@ -14,9 +14,7 @@ public class BookLoan {
     public BookLoan(final User user, final BookCopy bookCopy) {
         this.user = user;
         this.bookCopy = bookCopy;
-
-        // TODO: Esta data deve ser alterada após os testes de atraso.
-        this.loanDate = LocalDate.of(2021, 1, 1);
+        this.loanDate = LocalDate.now();
         this.returnDate = this.loanDate.plusDays(this.user.getLoanMaxDaysAllowed());
     }
 
